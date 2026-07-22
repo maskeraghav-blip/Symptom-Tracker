@@ -1,0 +1,17 @@
+{
+  "name": "meddemo-server",
+  "version": "1.0.0",
+  "description": "Backend API for MedDemo app with MySQL database",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^9.8.0",
+    "mysql2": "^3.12.0"
+  }
+}

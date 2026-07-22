@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules/
+server/node_modules/
 
 # Expo
 .expo/
@@ -26,12 +27,17 @@ npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# macOS
+# macOS & System
 .DS_Store
+__MACOSX/
 *.pem
 
-# local env files
+# Environment & local credentials (DO NOT PUSH SENSITIVE PASSWORDS)
+.env
 .env*.local
+.env.production
+server/.env
+*.env
 
 # typescript
 *.tsbuildinfo
