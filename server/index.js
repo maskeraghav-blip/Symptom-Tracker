@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const {
   initDatabase,
   findOrCreatePatient,
@@ -20,13 +21,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve production frontend bundle from 'dist'
+const distPath = path.join(__dirname, '../dist');
+app.use(express.static(distPath));
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'MedDemo MySQL Backend API is running' });
+  res.json({ status: 'ok', message: 'MedDemo Production Server & MySQL Backend API is running' });
 });
 
 // Patient login endpoint
-// Body: { userId, patientName, contactNumber }
 app.post('/api/patients/login', async (req, res) => {
   try {
     const { userId, patientName, contactNumber } = req.body;
@@ -96,11 +100,19 @@ app.delete('/api/patients/:userId/logs/:logId', async (req, res) => {
   }
 });
 
+// Catch-all route for Single Page Application navigation
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  res.sendFile(path.join(distPath, 'index.html'));
+});
+
 // Start database and server
 async function startServer() {
   await initDatabase();
   app.listen(PORT, () => {
-    console.log(`🚀 MedDemo Backend Server running on http://localhost:${PORT}`);
+    console.log(`🚀 MedDemo Production Application & MySQL Backend running on http://localhost:${PORT}`);
   });
 }
 
